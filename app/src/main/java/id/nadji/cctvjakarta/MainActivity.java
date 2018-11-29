@@ -2,6 +2,7 @@ package id.nadji.cctvjakarta;
 
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -41,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
     private List<Feature> featureList;
     private Adapter mAdapter;
     private SearchView searchView;
+
+    public static final String EXTRA_URL = "location" ;
 
     // url to fetch contacts json
     //private static final String URL = "https://api.androidhive.info/json/contacts.json";
@@ -190,6 +193,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
 
     @Override
     public void onFeatureSelected(Feature feature) {
-        Toast.makeText(getApplicationContext(), "Selected: " + feature.getType() + ", "+feature.getProperties().getUrl() , Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(), "Selected: " + feature.getType() + ", "+feature.getProperties().getUrl() , Toast.LENGTH_LONG).show();
+        Intent videoIntent = new Intent(this, PlayVideo.class);
+
+        videoIntent.putExtra(EXTRA_URL, feature.getProperties().getUrl());
+
+        startActivity(videoIntent);
     }
 }
