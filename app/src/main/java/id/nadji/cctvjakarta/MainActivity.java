@@ -45,8 +45,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
 
     public static final String EXTRA_URL = "location" ;
 
-    // url to fetch contacts json
-    //private static final String URL = "https://api.androidhive.info/json/contacts.json";
+    // url API
     private static final String URL = "http://api.jakarta.go.id/v1/cctvbalitower/?format=geojson";
 
     @Override
@@ -89,13 +88,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
                             return;
                         }
 
-                        //Gson gson = new Gson();
-                        //Feature feature;
-                        //feature = gson.fromJson(response.toString(),Feature.class);
-
-
-                        //List<Feature> items = new Gson().fromJson(response.toString(), new TypeToken<List<Feature>>() {
-                        //}.getType());
                         Gson gson = new Gson();
                         Features features = gson.fromJson(response.toString(), Features.class);
 
