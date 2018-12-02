@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -55,16 +56,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // toolbar fancy stuff
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+
         getSupportActionBar().setTitle(R.string.toolbar_title);
 
         recyclerView = findViewById(R.id.recycler_view);
         featureList = new ArrayList<Feature>();
         mAdapter = new Adapter(this, featureList, this);
 
-        // white background notification bar
-        whiteNotificationBar(recyclerView);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -160,7 +159,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         if (id == R.id.action_search) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
@@ -174,18 +172,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         super.onBackPressed();
     }
 
-    private void whiteNotificationBar(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
-    }
 
     @Override
     public void onFeatureSelected(Feature feature) {
-        //Toast.makeText(getApplicationContext(), "Selected: " + feature.getType() + ", "+feature.getProperties().getUrl() , Toast.LENGTH_LONG).show();
         Intent videoIntent = new Intent(this, PlayVideo.class);
 
         videoIntent.putExtra(EXTRA_URL, feature.getProperties().getUrl());

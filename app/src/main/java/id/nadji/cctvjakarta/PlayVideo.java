@@ -23,9 +23,11 @@ public class PlayVideo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_video);
         WebView webView = (WebView)findViewById(R.id.webview);
+        TextView tv = (TextView)findViewById(R.id.coba);
 
         Intent intent = getIntent();
         String url = intent.getStringExtra(EXTRA_URL);
+        tv.setText(url);
 
         webView.setWebChromeClient(new WebChromeClientCustomClient());
 

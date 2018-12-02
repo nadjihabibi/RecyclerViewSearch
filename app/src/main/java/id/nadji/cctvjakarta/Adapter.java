@@ -1,6 +1,7 @@
 package id.nadji.cctvjakarta;
 
 import android.content.Context;
+import android.graphics.drawable.Icon;
 import android.location.Address;
 import android.location.Geocoder;
 import android.support.v7.widget.RecyclerView;
@@ -27,19 +28,18 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>
     private AdapterListener listener;
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView name, phone;
+        public TextView nomer, lokasi;
         public ImageView thumbnail;
 
         public MyViewHolder(View view) {
             super(view);
-            name = view.findViewById(R.id.name);
-            phone = view.findViewById(R.id.phone);
+            nomer = view.findViewById(R.id.nomer_camera);
+            lokasi = view.findViewById(R.id.lokasi_camera);
             thumbnail = view.findViewById(R.id.thumbnail);
 
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    // send selected contact in callback
                     listener.onFeatureSelected(featureListFiltered.get(getAdapterPosition()));
                 }
             });
@@ -79,15 +79,8 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>
         String alamat = addresses.get(0).getAddressLine(0);
 
 
-        holder.name.setText(feature.getProperties().getId());
-       // holder.phone.setText((CharSequence) feature.getProperties());
-       // holder.phone.setText(feature.getProperties().getUrl());
-        holder.phone.setText(alamat);
-
-       // Glide.with(context)
-                //.load(feature.getImage())
-               // .apply(RequestOptions.circleCropTransform())
-               // .into(holder.thumbnail);
+        holder.nomer.setText(feature.getProperties().getId());
+        holder.lokasi.setText(alamat);
     }
 
     @Override
@@ -107,8 +100,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>
                     List<Feature> filteredList = new ArrayList<>();
                     for (Feature row : featureList) {
 
-                        // name match condition. this might differ depending on your requirement
-                        // here we are looking for name or phone number match
+                        // kondisi untuk filter / search berdasarkan nama
                         if (row.getProperties().getUrl().toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
