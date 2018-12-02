@@ -56,7 +56,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+       //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
 
         getSupportActionBar().setTitle(R.string.toolbar_title);
 
@@ -159,6 +159,16 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         if (id == R.id.action_search) {
             return true;
         }
+
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        if (mode == AppCompatDelegate.MODE_NIGHT_NO) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        finish();
         return super.onOptionsItemSelected(item);
     }
 
