@@ -85,7 +85,7 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>
         holder.thumbnail.setText(feature.getProperties().getId());
 
         /**
-         *set background shape secara acak
+         *set background color shape secara acak
          */
         Random r = new Random();
         int red = r.nextInt(255 - 0 + 1)+0;

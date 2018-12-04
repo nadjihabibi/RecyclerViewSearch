@@ -3,9 +3,6 @@ package id.nadji.cctvjakarta;
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.Drawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.AppCompatDelegate;
@@ -16,7 +13,6 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
@@ -46,6 +42,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
     private SearchView searchView;
 
     public static final String EXTRA_URL = "location" ;
+    public static final String EXTRA_LATITUDE = "latitude";
+    public static final String EXTRA_LONGITUDE = "longitude";
 
     // url API
     private static final String URL = "http://api.jakarta.go.id/v1/cctvbalitower/?format=geojson";
@@ -189,6 +187,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Intent videoIntent = new Intent(this, PlayVideo.class);
 
         videoIntent.putExtra(EXTRA_URL, feature.getProperties().getUrl());
+        videoIntent.putExtra(EXTRA_LATITUDE, feature.getProperties().getLocation().getLatitude());
+        videoIntent.putExtra(EXTRA_LONGITUDE, feature.getProperties().getLocation().getLongitude());
 
         startActivity(videoIntent);
     }

@@ -2,43 +2,43 @@ package id.nadji.cctvjakarta;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.net.Uri;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
-import android.webkit.WebViewClient;
-import android.widget.MediaController;
 import android.widget.TextView;
-import android.widget.VideoView;
 
+import static id.nadji.cctvjakarta.MainActivity.EXTRA_LATITUDE;
+import static id.nadji.cctvjakarta.MainActivity.EXTRA_LONGITUDE;
 import static id.nadji.cctvjakarta.MainActivity.EXTRA_URL;
 
 public class PlayVideo extends AppCompatActivity {
+    Intent intent ;
+    TextView tvLokasi;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.play_video);
         WebView webView = (WebView)findViewById(R.id.webview);
-        TextView tv = (TextView)findViewById(R.id.coba);
+        tvLokasi = findViewById(R.id.tv_lokasi);
+        intent = getIntent();
 
-        Intent intent = getIntent();
         String url = intent.getStringExtra(EXTRA_URL);
-        tv.setText(url);
+        String lat = intent.getStringExtra(EXTRA_LATITUDE);
+        String lon = intent.getStringExtra(EXTRA_LONGITUDE);
 
         webView.setWebChromeClient(new WebChromeClientCustomClient());
-
         WebSettings webSettings = webView.getSettings();
         webSettings.setPluginState(WebSettings.PluginState.ON_DEMAND);
-
         webSettings.setJavaScriptEnabled(true);
         webView.setFocusable(true);
         webView.loadUrl(url);
+        tvLokasi.setText(url);
 
     }
+
 
     private class WebChromeClientCustomClient extends WebChromeClient {
         @Override
