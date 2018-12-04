@@ -7,6 +7,7 @@ import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.app.AppCompatDelegate;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
@@ -45,8 +46,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
 
     public static final String EXTRA_URL = "location" ;
 
-    // url to fetch contacts json
-    //private static final String URL = "https://api.androidhive.info/json/contacts.json";
+    // url API
     private static final String URL = "http://api.jakarta.go.id/v1/cctvbalitower/?format=geojson";
 
     @Override
@@ -56,16 +56,14 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        // toolbar fancy stuff
-        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+       //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+
         getSupportActionBar().setTitle(R.string.toolbar_title);
 
         recyclerView = findViewById(R.id.recycler_view);
         featureList = new ArrayList<Feature>();
         mAdapter = new Adapter(this, featureList, this);
 
-        // white background notification bar
-        whiteNotificationBar(recyclerView);
 
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -89,13 +87,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
                             return;
                         }
 
-                        //Gson gson = new Gson();
-                        //Feature feature;
-                        //feature = gson.fromJson(response.toString(),Feature.class);
-
-
-                        //List<Feature> items = new Gson().fromJson(response.toString(), new TypeToken<List<Feature>>() {
-                        //}.getType());
                         Gson gson = new Gson();
                         Features features = gson.fromJson(response.toString(), Features.class);
 
@@ -169,6 +160,15 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
             return true;
         }
 
+        int mode = AppCompatDelegate.getDefaultNightMode();
+        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        if (mode == AppCompatDelegate.MODE_NIGHT_NO) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
+        startActivity(new Intent(MainActivity.this, MainActivity.class));
+        finish();
         return super.onOptionsItemSelected(item);
     }
 
@@ -182,18 +182,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         super.onBackPressed();
     }
 
-    private void whiteNotificationBar(View view) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            int flags = view.getSystemUiVisibility();
-            flags |= View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR;
-            view.setSystemUiVisibility(flags);
-            getWindow().setStatusBarColor(Color.WHITE);
-        }
-    }
 
     @Override
     public void onFeatureSelected(Feature feature) {
-        //Toast.makeText(getApplicationContext(), "Selected: " + feature.getType() + ", "+feature.getProperties().getUrl() , Toast.LENGTH_LONG).show();
         Intent videoIntent = new Intent(this, PlayVideo.class);
 
         videoIntent.putExtra(EXTRA_URL, feature.getProperties().getUrl());
