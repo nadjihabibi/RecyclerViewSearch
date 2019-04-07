@@ -12,7 +12,7 @@ import android.util.TypedValue;
 import android.view.View;
 
 
-public class MyDividerItemDecoration  extends RecyclerView.ItemDecoration {
+public class MyDividerItemDecoration extends RecyclerView.ItemDecoration {
 
     private static final int[] ATTRS = new int[]{
             android.R.attr.listDivider

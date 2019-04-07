@@ -4,5 +4,6 @@
     <string name="toolbar_title">CCTV Jakarta</string>
     <string name="action_search">Cari Lokasi</string>
     <string name="search_hint">Ketik Lokasi…</string>
-    <string name="dark">Ubah Tema</string>
+    <string name="dark">Ubah Tema Gelap</string>
+    <string name="day">Ubah Tema Terang</string>
 </resources>

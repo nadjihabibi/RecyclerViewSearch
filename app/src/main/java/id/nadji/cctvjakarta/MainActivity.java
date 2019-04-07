@@ -15,6 +15,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -22,6 +23,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.facebook.shimmer.ShimmerFrameLayout;
 import com.google.gson.Gson;
 
 import org.json.JSONObject;
@@ -41,7 +43,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
     private Adapter mAdapter;
     private SearchView searchView;
 
-    public static final String EXTRA_URL = "location" ;
+    private ShimmerFrameLayout shimmerFrameLayout;
+
+    public static final String EXTRA_URL = "location";
     public static final String EXTRA_LATITUDE = "latitude";
     public static final String EXTRA_LONGITUDE = "longitude";
 
@@ -55,7 +59,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-       //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
+        shimmerFrameLayout = (ShimmerFrameLayout) findViewById(R.id.shimmer_layout);
+        shimmerFrameLayout.startShimmer();
 
         getSupportActionBar().setTitle(R.string.toolbar_title);
 
@@ -77,12 +82,12 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
      * fetches json by making http calls
      */
     private void fetchContacts() {
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,URL,null,
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, URL, null,
                 new Response.Listener<JSONObject>() {
                     @Override
                     public void onResponse(JSONObject response) {
                         if (response == null) {
-                            Toast.makeText(getApplicationContext(), "Couldn't fetch the contacts! Pleas try again.", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(), "Couldn't fetch the data! Pleas try again.", Toast.LENGTH_LONG).show();
                             return;
                         }
 
@@ -95,6 +100,9 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
 
                         // refreshing recycler view
                         mAdapter.notifyDataSetChanged();
+
+                        shimmerFrameLayout.stopShimmer();
+                        shimmerFrameLayout.setVisibility(View.GONE);
                     }
                 }, new Response.ErrorListener() {
             @Override
@@ -103,7 +111,7 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
                 Log.e(TAG, "Error: " + error.getMessage());
                 Toast.makeText(getApplicationContext(), "Error: " + error.getMessage(), Toast.LENGTH_SHORT).show();
             }
-        }){
+        }) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -149,21 +157,11 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_search) {
-            return true;
-        }
-
-        int mode = AppCompatDelegate.getDefaultNightMode();
-        //AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_AUTO);
-        if (mode == AppCompatDelegate.MODE_NIGHT_NO) {
+        if (id == R.id.pilih_tema_gelap) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        } else {
+        } else if (id == R.id.pilih_tema_terang) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
         startActivity(new Intent(MainActivity.this, MainActivity.class));
