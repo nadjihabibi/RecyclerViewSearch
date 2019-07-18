@@ -6,4 +6,9 @@
     <string name="search_hint">Ketik Lokasi…</string>
     <string name="dark">Ubah Tema Gelap</string>
     <string name="day">Ubah Tema Terang</string>
+    <string name="logo">logo</string>
+    <string name="judul">CCTV</string>
+    <string name="sub_judul">DKI Jakarta</string>
+    <string name="versi">versi 0.1.0</string>
+    <string name="bg">bg</string>
 </resources>

@@ -118,7 +118,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.MyViewHolder>
                     for (Feature row : featureList) {
 
                         // kondisi untuk filter / search berdasarkan nama
-                        if (row.getProperties().getUrl().toLowerCase().contains(charString.toLowerCase())) {
+                        if (
+
+                                row.getProperties().getUrl()
+                                .toLowerCase().contains(charString.toLowerCase())) {
                             filteredList.add(row);
                         }
                     }

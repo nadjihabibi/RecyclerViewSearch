@@ -16,6 +16,8 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -49,6 +51,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
     public static final String EXTRA_LATITUDE = "latitude";
     public static final String EXTRA_LONGITUDE = "longitude";
 
+    Animation geserKiri, getGeserKiriHelper;
+
     // url API
     private static final String URL = "http://api.jakarta.go.id/v1/cctvbalitower/?format=geojson";
 
@@ -59,6 +63,8 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        geserKiri = AnimationUtils.loadAnimation(this, R.anim.geserkiri);
+        getGeserKiriHelper = AnimationUtils.loadAnimation(this, R.anim.geserkirihelper);
         shimmerFrameLayout = (ShimmerFrameLayout) findViewById(R.id.shimmer_layout);
         shimmerFrameLayout.startShimmer();
 
@@ -189,5 +195,6 @@ public class MainActivity extends AppCompatActivity implements Adapter.AdapterLi
         videoIntent.putExtra(EXTRA_LONGITUDE, feature.getProperties().getLocation().getLongitude());
 
         startActivity(videoIntent);
+        overridePendingTransition(R.anim.geserkiri, R.anim.geserkirihelper);
     }
 }
