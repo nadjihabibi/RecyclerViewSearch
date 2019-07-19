@@ -50,8 +50,11 @@ public class PlayVideo extends AppCompatActivity {
         webSettings.setPluginState(WebSettings.PluginState.ON_DEMAND);
         webSettings.setJavaScriptEnabled(true);
         webView.setFocusable(true);
+        webView.getSettings().setDomStorageEnabled(true);
         webView.loadUrl(url);
         tvLokasi.setText(alamat);
+
+
 
     }
 

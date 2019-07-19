@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".PlayVideo">
 
-    <FrameLayout
+    <RelativeLayout
         android:id="@+id/frameLayout"
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -19,7 +19,7 @@
             android:id="@+id/webview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-    </FrameLayout>
+    </RelativeLayout>
 
     <TextView
         android:id="@+id/tv_lokasi"
